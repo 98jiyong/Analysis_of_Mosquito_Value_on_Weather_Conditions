@@ -63,43 +63,56 @@ table(is.na(c_data))
 M = cor(c_data)
 corrplot(M, method = 'shade', addCoef.col = "black")
 
-# -----------다중회귀분석(수변부, 주거지, 공원)-----------
+# -----------다중회귀분석-----------
+### 분석(수변부, 주거지, 공원)
 lm_1 <- lm(waterfront ~ avg_temp  + avg_humidity, data = c_data)  
-summary(lm_1)
-lm_2 <- lm(residence ~ avg_temp + avg_humidity, data = c_data)
-summary(lm_2)
-lm_3 <- lm(park ~ avg_temp  + avg_humidity, data = c_data)
-summary(lm_3)
+summary(lm_1)  
+### lm_1에 대한 회귀분석 이미지 
+lm_2 <- lm(residence ~ avg_temp + avg_humidity, data = c_data)  
+summary(lm_2)  
+### lm_2에 대한 회귀분석 이미지 
+lm_3 <- lm(park ~ avg_temp  + avg_humidity, data = c_data)  
+summary(lm_3)  
+### lm_3에 대한 회귀분석 이미지 
 
 # -----------회귀모델 평가-----------
-# 다중공선성 & AIC확인(Std. Error이 낮긴해도) -> 다중공선성 가능성 확인인
-vif(lm_1)
-vif(lm_2)
-vif(lm_3)
+### 다중공선성 & AIC확인
+vif(lm_1) # (VIF < 5) -> 다중공선성 가능성 낮음  
+vif(lm_2) # (VIF < 5) -> 다중공선성 가능성 낮음  
+vif(lm_3) # (VIF < 5) -> 다중공선성 가능성 낮음  
 
-# AIC가 가장작은 모델 찾기(기존 사용하던 모델이 가장 best)
-step(lm_1, direction = "both", scope = (~ avg_temp + avg_humidity))
-step(lm_2, direction = "both", scope = (~ avg_temp + avg_humidity))
-step(lm_3, direction = "both", scope = (~ avg_temp + avg_humidity))
+### AIC가 가장작은 모델 찾기 -> (기존 사용하던 모델이 가장 best)
+step(lm_1, direction = "both", scope = (~ avg_temp + avg_humidity))  
+step(lm_2, direction = "both", scope = (~ avg_temp + avg_humidity))  
+step(lm_3, direction = "both", scope = (~ avg_temp + avg_humidity))  
 
 # -----------로지스틱회귀분석-----------
-# 종속변수 재설정
-c_data$avg_temp01 <- ifelse((c_data$avg_temp >= 20 & c_data$avg_temp <= 30), 1, 0) # 모기가 자주 발생하는 온도(20~30)
-c_data$precipitation01 <- ifelse((c_data$precipitation >= 0.1), 1, 0)
-c_data$avg_humidity01 <- ifelse((c_data$avg_humidity >= 50 & c_data$avg_humidity <= 80), 1, 0) # 모기가 자주 발생하는 습도(50~80)
-c_data$waterfront01 <-  ifelse(c_data$waterfront >= 1, 1,0)
-c_data$residence01 <-  ifelse(c_data$residence >= 1, 1,0)
-c_data$park01 <-  ifelse(c_data$park >= 1, 1,0)
+### 종속변수 재설정
+모기가 자주 발생하는 온도(20°C-30°C)면 1 아니면 0  
+c_data$avg_temp01 <- ifelse((c_data$avg_temp >= 20 & c_data$avg_temp <= 30), 1, 0)  
+비가 오면 1 아니면 0  
+c_data$precipitation01 <- ifelse((c_data$precipitation >= 0.1), 1, 0)  
+모기가 자주 발생하는 습도(50%-80%)면 1 아니면 0  
+c_data$avg_humidity01 <- ifelse((c_data$avg_humidity >= 50 & c_data$avg_humidity <= 80), 1, 0)  
+수변부에 모기가 있으면 1 아니면 0  
+c_data$waterfront01 <-  ifelse(c_data$waterfront >= 1, 1,0)  
+거주지에 모기가 있으면 1 아니면 0  
+c_data$residence01 <-  ifelse(c_data$residence >= 1, 1,0)  
+공원에 모기가 있으면 1 아니면 0  
+c_data$park01 <-  ifelse(c_data$park >= 1, 1,0)  
 
-# 분석진행(수변부, 주거지, 공원)
-glm_1 <- glm(waterfront01 ~ avg_temp01 +precipitation01 + avg_humidity01, family = binomial, data = c_data)
-summary(glm_1)
-glm_2 <- glm(residence01 ~ avg_temp01 + precipitation01 + avg_humidity01, family = binomial, data = c_data)
-summary(glm_2)
-glm_3 <- glm(park01 ~ avg_temp01 + precipitation01 + avg_humidity01, family = binomial, data = c_data)
-summary(glm_3)
+### 분석진행(수변부, 주거지, 공원)
+glm_1 <- glm(waterfront01 ~ avg_temp01 +precipitation01 + avg_humidity01, family = binomial, data = c_data)  
+summary(glm_1)  
+### 분석결과 이미지 첨부
+glm_2 <- glm(residence01 ~ avg_temp01 + precipitation01 + avg_humidity01, family = binomial, data = c_data)  
+summary(glm_2)  
+### 분석결과 이미지 첨부
+glm_3 <- glm(park01 ~ avg_temp01 + precipitation01 + avg_humidity01, family = binomial, data = c_data)  
+summary(glm_3)  
+### 분석결과 이미지 첨부
 
-# 지수변환 값 산출(수변부, 주거지, 공원)
+### 지수변환 값 산출(수변부, 주거지, 공원)
 exp(glm_1$coefficients) #평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 4.61배 / 1배 / 0.5배 
 exp(glm_2$coefficients) #평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 5.14배 / 1배 / 0.5배
 exp(glm_3$coefficients) #평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 10배 / 1배 / 0.4배
