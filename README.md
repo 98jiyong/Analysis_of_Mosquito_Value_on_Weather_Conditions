@@ -67,7 +67,9 @@ corrplot(M, method = 'shade', addCoef.col = "black")
 ### 분석(수변부, 주거지, 공원)
 lm_1 <- lm(waterfront ~ avg_temp  + avg_humidity, data = c_data)  
 summary(lm_1)  
-### lm_1에 대한 회귀분석 이미지 
+<p align = "center">
+  <img src ="![lm_1](https://github.com/98jiyong/Data_Compile_Analysis/assets/119985920/209d5a3d-6f97-419f-b7e6-e9394daea175)">
+</p>
 lm_2 <- lm(residence ~ avg_temp + avg_humidity, data = c_data)  
 summary(lm_2)  
 ### lm_2에 대한 회귀분석 이미지 
