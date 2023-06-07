@@ -76,7 +76,7 @@ summary(lm_3)
 ### lm_3에 대한 회귀분석 이미지 
 
 # -----------회귀모델 평가-----------
-### 다중공선성 & AIC확인
+### 다중공선성 
 vif(lm_1) # (VIF < 5) -> 다중공선성 가능성 낮음  
 vif(lm_2) # (VIF < 5) -> 다중공선성 가능성 낮음  
 vif(lm_3) # (VIF < 5) -> 다중공선성 가능성 낮음  
@@ -113,75 +113,87 @@ summary(glm_3)
 ### 분석결과 이미지 첨부
 
 ### 지수변환 값 산출(수변부, 주거지, 공원)
-exp(glm_1$coefficients) #평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 4.61배 / 1배 / 0.5배 
-exp(glm_2$coefficients) #평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 5.14배 / 1배 / 0.5배
-exp(glm_3$coefficients) #평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 10배 / 1배 / 0.4배
+exp(glm_1$coefficients)  
+### 지수변환 값 이미지  
+평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 4.61배 / 1배 / 0.5배 
+exp(glm_2$coefficients)  
+### 지수변환 값 이미지  
+평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 5.14배 / 1배 / 0.5배
+exp(glm_3$coefficients)  
+### 지수변환 값 이미지  
+평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 10배 / 1배 / 0.4배
 
-# 지수변환 값 시각화 (비가 올때 안올때 평균기온의 증가로 인한 모기 번식량)
-visreg(glm_1, "avg_temp01", by = "precipitation01", gg = TRUE, scale = "response")
-visreg(glm_2, "avg_temp01", by = "precipitation01", gg = TRUE, scale = "response")
-visreg(glm_3, "avg_temp01", by = "precipitation01", gg = TRUE, scale = "response")
+### 지수변환 값 시각화 -> (비가 올때 안올때 평균기온의 증가로 인한 모기 번식량)
+### 시각화 이미지 넣기
+visreg(glm_1, "avg_temp01", by = "precipitation01", gg = TRUE, scale = "response")  
+visreg(glm_2, "avg_temp01", by = "precipitation01", gg = TRUE, scale = "response")  
+visreg(glm_3, "avg_temp01", by = "precipitation01", gg = TRUE, scale = "response")  
 
 # -----------회귀모델 평가-----------
-# 다중공선성 확인
-vif(glm_1) #(VIF < 5) -> 다중공선성의 가능성은 낮다고 판단
-vif(glm_2) #(VIF < 5) -> 다중공선성의 가능성은 낮다고 판단
-vif(glm_3) #(VIF < 5) -> 다중공선성의 가능성은 낮다고 판단
+### 다중공선성 확인
+vif(glm_1) # (VIF < 5) -> 다중공선성 가능성 낮음  
+vif(glm_2) # (VIF < 5) -> 다중공선성 가능성 낮음  
+vif(glm_3) # (VIF < 5) -> 다중공선성 가능성 낮음  
 
-# AIC가 가장작은 모델 찾기 -> (best : 강수량을 제외한 모델)
+### AIC가 가장작은 모델 찾기 -> (best : 강수량을 제외한 모델)
 step(glm_1, direction = "both",
-     scope = (~ avg_temp01 + precipitation01 + avg_humidity01)) # (AIC : 977.79 -> 975.79)
+     scope = (~ avg_temp01 + precipitation01 + avg_humidity01)) # (AIC : 977.79 -> 975.79)  
 step(glm_2, direction = "both",
-     scope = (~ avg_temp01 + precipitation01 + avg_humidity01)) # (AIC : 1033.32 -> 1031.32)
+     scope = (~ avg_temp01 + precipitation01 + avg_humidity01)) # (AIC : 1033.32 -> 1031.32)  
 step(glm_3, direction = "both",
-     scope = (~ avg_temp01 + precipitation01 + avg_humidity01)) # (AIC : 1389.14 -> 1387.16)
+     scope = (~ avg_temp01 + precipitation01 + avg_humidity01)) # (AIC : 1389.14 -> 1387.16)  
 
-# 최적의 모델로 다시 로지스틱회귀분석
-glm_4 <- glm(waterfront01 ~ avg_temp01 + avg_humidity01, family = binomial, data = c_data)
-glm_5 <- glm(residence01 ~ avg_temp01 + avg_humidity01, family = binomial, data = c_data)
-glm_6 <- glm(park01 ~ avg_temp01 + avg_humidity01, family = binomial, data = c_data)
+### 최적의 모델로 로지스틱회귀분석 재실시
+glm_4 <- glm(waterfront01 ~ avg_temp01 + avg_humidity01, family = binomial, data = c_data)  
+glm_5 <- glm(residence01 ~ avg_temp01 + avg_humidity01, family = binomial, data = c_data)  
+glm_6 <- glm(park01 ~ avg_temp01 + avg_humidity01, family = binomial, data = c_data)  
 
-# 지수변환 값 산출(수변부, 주거지, 공원원)
-exp(glm_4$coefficients) #평균기온 / 평균 상대습도가 1 증가했을때, 수변부의 모기번식 비율이 4.6배 / 0.5배 
-exp(glm_5$coefficients) #평균기온 / 평균 상대습도가 1 증가했을때, 수변부의 모기번식 비율이 5.14배 / 0.5배 
-exp(glm_6$coefficients) #평균기온 / 평균 상대습도가 1 증가했을때, 수변부의 모기번식 비율이 10.2배 / 0.4배 
+### 지수변환 값 산출(수변부, 주거지, 공원원)
+exp(glm_4$coefficients)  
+### 지수변환 값 이미지  
+평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 4.61배 / 0.5배 
+exp(glm_5$coefficients)  
+### 지수변환 값 이미지  
+평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 5.14배 / 0.5배
+exp(glm_6$coefficients)  
+### 지수변환 값 이미지  
+평균기온 / 일강수량이 / 평균상대습도 1 증가했을때, 수변부의 모기번식 비율이 10.2배 / 0.4배
 
-# H-L 적합도 검정(x-squared값이 낮고, p-value값이 높음 -> 매우 적합한 모델)
-hoslem.test(x = glm_4$y , y  = fitted(glm_4)) 
-hoslem.test(x = glm_5$y , y  = fitted(glm_5))
-hoslem.test(x = glm_6$y , y  = fitted(glm_6))
+### H-L 적합도 검정(x-squared값이 낮고, p-value값이 높음 -> 매우 적합한 모델)
+### 이미지 넣기
+hoslem.test(x = glm_4$y , y  = fitted(glm_4))  
+hoslem.test(x = glm_5$y , y  = fitted(glm_5))  
+hoslem.test(x = glm_6$y , y  = fitted(glm_6))  
 
-# 매달 첫째날 데이터 가져오기
-weather_data$date <- as.Date(weather_data$date)
-start_date <- as.Date("2018-01-01")
-end_date <- as.Date("2022-12-31")
+### 매달 첫째날 데이터 가져오기 (날씨 데이터 사용)
+weather_data$date <- as.Date(weather_data$date)  
+start_date <- as.Date("2018-01-01")  
+end_date <- as.Date("2022-12-31")  
 
-filtered_data <- weather_data %>%
-  filter(date >= start_date & date <= end_date) %>%
-  filter(format(date, "%d") == "01")
+filtered_data <- weather_data %>% filter(date >= start_date & date <= end_date) %>% filter(format(date, "%d") == "01")  
 
-View(filtered_data)
+View(filtered_data)  
 
-# 새로운 데이터프레임 만들기
-month <- c(1,2,3,4,5,6,7,8,9,10,11,12)
-y_2018 <- c(-1.3,-4.0,-0.2,15.6,20.4,23.8,21.9,33.6,25.5,15.4,8.4,5.5)
-y_2019 <- c(-5.0,-2.1,6.6,5.5,16.4,18.9,23.9,26.3,23.7,23.1,14.9,4.6)
-y_2020 <- c(-2.2,2.6,5.8,11.3,20.2,19.7,21.1,25.3,26.6,18.8,13.7,1.1)
-y_2021 <- c(-4.2,5.0,4.7,17.7,10.2,20.2,26.3,27.1,21.4,21.1,12.9,-1.3)
-y_2022 <- c(-4.3,-1.3,5.8,9.2,13.4,22.1,26.6,28.6,24.0,20.9,13.1,-5.4)
+### 새로운 데이터프레임 만들기
+month <- c(1,2,3,4,5,6,7,8,9,10,11,12)  
+y_2018 <- c(-1.3,-4.0,-0.2,15.6,20.4,23.8,21.9,33.6,25.5,15.4,8.4,5.5)  
+y_2019 <- c(-5.0,-2.1,6.6,5.5,16.4,18.9,23.9,26.3,23.7,23.1,14.9,4.6)  
+y_2020 <- c(-2.2,2.6,5.8,11.3,20.2,19.7,21.1,25.3,26.6,18.8,13.7,1.1)  
+y_2021 <- c(-4.2,5.0,4.7,17.7,10.2,20.2,26.3,27.1,21.4,21.1,12.9,-1.3)  
+y_2022 <- c(-4.3,-1.3,5.8,9.2,13.4,22.1,26.6,28.6,24.0,20.9,13.1,-5.4)  
 
-temp_data <- data.frame(month,y_2018,y_2019,y_2020,y_2021,y_2022, stringsAsFactors = FALSE)
+temp_data <- data.frame(month,y_2018,y_2019,y_2020,y_2021,y_2022, stringsAsFactors = FALSE)  
 
-View(temp_data)
+View(temp_data)  
 
-# 데이터 재구조화
-temp_data <- reshape2::melt(temp_data, id.vars = "month")
+### 데이터 재구조화
+temp_data <- reshape2::melt(temp_data, id.vars = "month")  
 
-# 꺾은선 그래프 생성
-ggplot(data = temp_data, aes(x = month, y = value, color = variable)) +
-  coord_cartesian(xlim = c(1,12)) + scale_x_continuous(breaks = seq(1,12,1)) +
-  coord_cartesian(ylim = c(-5,35)) + scale_y_continuous(breaks = seq(-5,35,5)) +
-  annotate("rect", xmin = 5, xmax = 9 , ymin = -5, ymax = 35, alpha = .2, fill="skyblue") +
-  geom_line() +
-  labs(x = "Month", y = "Temperature", title = "Temperature by Year") +
-  scale_color_discrete(name = "Year")
+### 꺾은선 그래프 생성
+### 이미지 넣기
+ggplot(data = temp_data, aes(x = month, y = value, color = variable)) +  
+  coord_cartesian(xlim = c(1,12)) + scale_x_continuous(breaks = seq(1,12,1)) +  
+  coord_cartesian(ylim = c(-5,35)) + scale_y_continuous(breaks = seq(-5,35,5)) +  
+  annotate("rect", xmin = 5, xmax = 9 , ymin = -5, ymax = 35, alpha = .2, fill="skyblue") +  
+  geom_line() + labs(x = "Month", y = "Temperature", title = "Temperature by Year") +  
+  scale_color_discrete(name = "Year")  
