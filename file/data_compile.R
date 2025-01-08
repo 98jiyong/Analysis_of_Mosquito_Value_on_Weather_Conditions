@@ -10,9 +10,9 @@ library(ResourceSelection)
 library(PerformanceAnalytics)
 
 # 데이터파일 불러오기
-mosq_data <- read.csv("C:/Users/k/Desktop/학교자료/4학년1학기/데이터수집및분석/프로젝트/서울시_모기예보제_정보.csv",
+mosq_data <- read.csv("./dataset/서울시_모기예보제_정보.csv",
                          header = TRUE, stringsAsFactors = TRUE, sep = ",", fileEncoding = 'euc-kr')
-weather_data <- read.csv("C:/Users/k/Desktop/학교자료/4학년1학기/데이터수집및분석/프로젝트/OBS_ASOS_DD.csv",
+weather_data <- read.csv("./dataset/OBS_ASOS_DD.csv",
                          header = TRUE, stringsAsFactors = TRUE, sep = ",", fileEncoding = 'euc-kr')
 View(mosq_data)
 View(weather_data)
