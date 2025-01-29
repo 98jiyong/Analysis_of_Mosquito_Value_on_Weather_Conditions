@@ -5,7 +5,7 @@
 4. [⚙️ 프로세스](#%EF%B8%8F-프로세스)
 5. [📊 결과물](#-결과물)
 6. [🗃️ 자료](#%EF%B8%8F-자료)
-7. [✏️ 코드 설명](#-코드-설명)
+7. [✏️ 코드 설명](#%EF%B8%8F-코드-설명)
 <br>
 
 ## 🖥️ 프로젝트 개요
@@ -48,8 +48,8 @@
 ## 🗂️ 프로젝트 범위
 <div style="text-align: center;">
 <table>
-<tr><th colspan="2">과제 구분</th><th>내용</th></tr>
-<tr><td rowspan="5">AI</td><td rowspan="5" align='center'>AI기반 공공자전거 수요분석, <br>예측모델 구현 및 시각화</td><td align='center'>원시 데이터 수집 및 데이터셋 구축</td></tr>
+<tr><th>과제 구분</th><th>내용</th></tr>
+<tr><td rowspan="5" align='center'>회귀분석을 통한 모기지수 분석, <br>예측모델 구현 및 시각화</td><td align='center'>원시 데이터 수집 및 데이터셋 구축</td></tr>
 <tr><td align='center'>데이터 전처리, 표준화, 상관관계 분석</td></tr>
 <tr><td align='center'>예측모델 선정 및 학습</td></tr>
 <tr><td align='center'>AIC, H-L적합도 등 평가지표를 활용한 모델 성능 평가</td></tr>
@@ -85,7 +85,6 @@
   >- 데이터 표준화 및 전처리(결측치, 이상치 처리)
   >- 변수를 표준화 및 정규화하여 모델학습 효율성을 향상
   >- 상관관계 분석을 통해 독립변수 간의 관계를 확인
-  >- 특성 중요도를 통해 중요도가 낮은 독립변수 제거
 - #### 데이터 모델링
   >- 모델 성능 평가를 위해 AIC, H-L적합도, 다중공선성 등의 지표를 사용
 - #### 데이터 예측
@@ -105,92 +104,111 @@
   <summary><b>1. 데이터 수집</b> (👈 Click)</summary>
   <br>
   <li>
-    서울시 공공자전거 일별 이용 현황 데이터(엑셀) : 2023년
+    서울시 모기예보제 데이터 : 2020년
   </li>
   <li>
-    서울시 기상관측 일병 기상 데이터(엑셀) : 2023년
-  </li>
+    서울시 기상관측 일병 기상 데이터 : 2020년
+  </li><br>
 
-  |공공자전거 데이터|기상관측 데이터|
+  |모기예보제 데이터|기상관측 데이터|
   |:---:|:---:|
-  |<img src="https://github.com/user-attachments/assets/4101d1ac-1d46-4f9a-9538-00282674518a" width="300" alt="데이터1">|<img src="https://github.com/user-attachments/assets/04e230dc-0a6b-4571-88b9-603fcef82327" width="300" alt="데이터2">|
+  |<img src="https://github.com/user-attachments/assets/67834d90-4fb1-4136-b458-f6dcc391cfee" width="300" alt="데이터1">|<img src="https://github.com/user-attachments/assets/6ea6dcf7-7ac0-49d3-9f5d-a42db6b87781" width="300" alt="데이터2">|
   <br>
 </details>
 <details>
-  <summary><b>2. 데이터 분석</b> (👈 Click)</summary>
+  <summary><b>2. 데이터 전처리</b> (👈 Click)</summary>
   <br>
   <ol>
     <li>
-      데이터 상관관계(Heatmap)
+      데이터 병합
     </li><br>
-    <img src="https://github.com/user-attachments/assets/83748058-4db5-4099-b0de-cfedcd2d1416" width="400" alt="히트맵"><br>
+    <img src="https://github.com/user-attachments/assets/16989ded-303c-4f63-b5d6-756c56a04920" alt="히트맵"><br><br>
     <li>
-      탐색적 데이터 분석
+      데이터 전처리
     </li>
     <ul>
       <li>
-        결측치 및 중복값 통계
+        중복값 확인
       </li><br>
-      <img src="https://github.com/user-attachments/assets/fffa7e15-d5b1-407a-a0b8-653b064bb634" alt="결측치"><br><br>
+      <img src="https://github.com/user-attachments/assets/dca2af76-9198-46d8-bc2f-25835c55eb92" alt="결측치"><br><br>
       <li>
-        주요 변수별 데이터 분포(Histogram)
+        결측치 확인 및 제거
       </li><br>
-      <img src="https://github.com/user-attachments/assets/7f1327cc-4eb1-4e50-8856-543e1203ff8d" alt="분포도"><br><br>
-      <li>
-        데이터 전처리
-      </li><br>
-      <img src="https://github.com/user-attachments/assets/d8bb8085-fcdd-4dfa-b922-99d0044749f3" alt="분포도"><br>
+      <img src="https://github.com/user-attachments/assets/5c593551-27b8-4012-9166-351906723d1f" alt="분포도"><br><br>
     </ul>
+    <li>
+      데이터 상관관계(Heatmap)
+    </li><br>
+    <img src="https://github.com/user-attachments/assets/061d051a-bd5a-490c-bd3d-23e1427465b6" width="400" alt="히트맵"><br>
   </ol>
 </details>
 <details>
-  <summary><b>3. 데이터 학습 및 모델정의 </b> (👈 Click)</summary>
+  <summary><b>3. 데이터 분석 </b> (👈 Click)</summary>
   <br>
-  <ol>
-    <li>예측 모델 선정</li>
+  <ul>
+  <li>다중 회귀 분석</li>
+    <ol>
+    <li>회귀계수 비교</li>
     <ul>
-      <li>결정계수 비교 : Ensemble 기법 중 하나인 XGBoost 모델 채택</li><br>
-      <img src="https://github.com/user-attachments/assets/97b29c7c-8c93-4029-bd20-979bc6023a9b" alt="모델 선정">
+      <li>평균기온이 가장 유의미하고, 일강수량이 가장 무의미한 것을 확인 </li><br>
+      <img src="https://github.com/user-attachments/assets/a56776ab-80f2-4a0f-a7d1-8947d91f3fe1" alt="모델 선정">
     </ul>
-    <li>모델 학습 및 시각화</li>
+    <li>분석 결과</li>
     <ul>
-      <li>모델 학습</li><br>
-      <img src="https://github.com/user-attachments/assets/c964e95e-fabd-4fab-af88-94468cb5cee4" alt="모델 학습"><br><br>
-      <li>학습과정 시각화</li><br>
-      <img src="https://github.com/user-attachments/assets/fdfa1423-93c2-4f1b-87e9-cfa683cb59c4" alt="모델 시각화"><br>
+      <li>모든 회귀계수가 유의미한 것을 확인</li>
+      <li>R-squared : 0.2328 => 설명력이 다소 부족함</li>
+      <li>p-value < 0.05 => 모델이 유의함</li><br>
+      <img src="https://github.com/user-attachments/assets/1b03ffef-b167-41f4-b80e-d3a0045b27d6" alt="모델 학습"><br><br>
+      <li>평균기온, 합계일사랴은 VIF < 2 이므로 다중공선성 영향이 거의 없음</li>
+      <li>평균상대습도는 2 < VIF< 5 이므로 주의가 필요함</li><br>
+      <img src="https://github.com/user-attachments/assets/a636c290-e97f-4033-bf33-c1b27fbe47e8" alt="모델 시각화"><br>
     </ul>
-    <li>모델 예측</li>
+    <li>시각화</li>
     <ul>
-      <li>예측값 vs 실제값 비교</li><br>
-      <ul>
-        <li>선 그래프 비교</li><br>
-        <img src="https://github.com/user-attachments/assets/40662084-42f6-4e33-b72d-55dbb349ac7a" alt="선 그래프"><br><br>
-        <li>산점도 분석</li><br>
-        <img src="https://github.com/user-attachments/assets/3754e41b-4c30-4133-a514-149e82f98918" alt="산점도"><br><br>
-        <li>잔차 분석</li><br>
-        <img src="https://github.com/user-attachments/assets/c7cf2f15-b69d-424b-a46d-49bc50297f94" alt="잔차"><br><br>
-      </ul>
+      <li>회귀선, 상관계수, 검정값 시각화</li><br>
+      <img src="https://github.com/user-attachments/assets/65cf8f9a-f3f5-44d0-a2a5-5d8bd4d24aab" alt="선 그래프"><br><br>
     </ul>
   </ol>
+  <li>로지스틱 회귀 분석</li>
+    <ol>
+    <li>분석</li>
+    <ul>
+      <li>분류를 위해 종속변수를 0,1로 변환</li><br>
+      <img src="https://github.com/user-attachments/assets/b896d19c-4d87-4850-b893-c94c957a9fe0" alt="모델 선정">
+      <li>로지스틱 회귀분석 진행</li><br>
+      <img src="https://github.com/user-attachments/assets/bab1b9b9-076a-4a79-a49c-b2311cc2aba4" alt="모델 선정">
+      <li>결과 출력</li><br>
+      <img src="https://github.com/user-attachments/assets/f1f3f3df-6268-4d7a-8471-686f063bd947" alt="모델 선정">
+    </ul>
+    <li>분석 결과</li>
+    <table>
+    <tr>
+    <td align='center'>수변부 분석 결과</td>
+    <td align='center'>주거지 분석 결과</td>    
+    </tr>
+    <tr>
+    <td align='center'><img src="https://github.com/user-attachments/assets/f9297330-e403-41c1-bba7-eff648187f52" width="300" alt="데이터1"></td>
+    <td align='center'><img src="https://github.com/user-attachments/assets/e4a251bf-46fc-444b-87f5-fb2562d38f35" width="300" alt="데이터2"></td>
+    </tr>
+    </table>
+    <ul>
+    <li>목적변수가 1이 될 확률을 높이는 요인 : '평균기온', '일강수량'</li>
+    <li>목적변수가 0이 될 확률을 높이는 요인 : '평균상대습도', '합계일사량'</li><br>
+    <img src="https://github.com/user-attachments/assets/a9738cfb-0cc8-4213-9c45-9e8d59b0acf5" width="400" alt="fata1"><br>
+    </ul>
+    <li>번식 비율 예측</li>
+    <ul>
+      <li>지수변환 값 산출</li>
+      <ul>
+        <li>전체 설명 변수 값이 0일 때, 모기 번식 비율 <br>수변부 : 17.002% / 주거지 : 28.87%</li>
+        <li>평균기온, 일강수량이 증가했을때 모기 번식 비율<br>수변부 : 1.14% (평균기온), 1.10% (일강수량) / 주거지 : 1.15% (평균기온), 1.11% (일강수량) </li>
+        <img src="https://github.com/user-attachments/assets/74a329a4-477c-44c3-b341-f963ab170890" alt="선 그래프"><br><br>
+    </ul>
+  </ol>
+  </ul>
+  
   
   <br>
-</details>
-<details>
-  <summary><b>4. 프로토타이핑(화면) </b> (👈 Click)</summary>
-  <br>
-  <ol>
-  <li>모델 예측</li>
-    <ul>
-      <li>기상요인에 따른 공공자전거 이용건수 예측</li><br>
-      <img src="https://github.com/user-attachments/assets/e0f4c19b-54a0-4452-a4ec-691b4443678f" alt="모델 예측"><br><br>
-    </ul>
-  <li>예측 결과</li>
-    <ul>
-      <li>기상요인에 따른 공공자전거 이용건수 예측</li><br>
-      <img src="https://github.com/user-attachments/assets/75bf3c39-3b04-46cc-ae68-db4c27836cf4" alt="예측 자료"><br>
-      <img src="https://github.com/user-attachments/assets/ab3156f7-e734-4f08-b18b-a8988d037e64" alt="예측 결과"><br>
-    </ul>
-  </ol>
 </details>
 <br>
 
