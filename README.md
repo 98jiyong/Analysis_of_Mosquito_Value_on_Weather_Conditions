@@ -1,5 +1,6 @@
-# Data_Compile_Analysis
-
+<details>
+  <summary><b>코드 및 설명</b> (👈 Click)</summary>
+  
 ### 필요한 라이브러리 호출
 ```
 library(ggplot2) 
@@ -275,3 +276,5 @@ ggplot(data = temp_data, aes(x = month, y = value, color = variable)) +
   scale_color_discrete(name = "Year")
 ```
 ![geom_line](https://github.com/98jiyong/Data_Compile_Analysis/assets/119985920/1048f664-469d-4235-bf6d-2476e11aec08)<br>
+
+</details>
