@@ -5,6 +5,7 @@
 4. [⚙️ 프로세스](#%EF%B8%8F-프로세스)
 5. [📊 결과물](#-결과물)
 6. [🗃️ 자료](#%EF%B8%8F-자료)
+7. [✏️ 코드 설명](#-코드-설명)
 <br>
 
 ## 🖥️ 프로젝트 개요
@@ -48,13 +49,10 @@
 <div style="text-align: center;">
 <table>
 <tr><th colspan="2">과제 구분</th><th>내용</th></tr>
-<tr><td rowspan="7">AI</td><td rowspan="7" align='center'>AI기반 공공자전거 수요분석, <br>예측모델 구현 및 시각화</td><td align='center'>원시 데이터 수집 및 데이터셋 구축</td></tr>
-<tr><td align='center'>데이터 전처리, 표준화, 상관관계 분석 (EDA도구 활용)</td></tr>
+<tr><td rowspan="5">AI</td><td rowspan="5" align='center'>AI기반 공공자전거 수요분석, <br>예측모델 구현 및 시각화</td><td align='center'>원시 데이터 수집 및 데이터셋 구축</td></tr>
+<tr><td align='center'>데이터 전처리, 표준화, 상관관계 분석</td></tr>
 <tr><td align='center'>예측모델 선정 및 학습</td></tr>
-<tr><td align='center'>MSE, R-Squared 등 평가지표를 활용한 모델 성능 평가</td></tr>
-<tr><td align='center'>웹 API 및 프로토타입 구충</td></tr>
-<tr><td align='center'>예측모델 시각화 및 웹기반 시스템 구축</td></tr>
-<tr><td align='center'>테스트</td></tr>
+<tr><td align='center'>AIC, H-L적합도 등 평가지표를 활용한 모델 성능 평가</td></tr>
 </table>
 </div><br>
 
@@ -62,20 +60,18 @@
 <br><br>
 
 ## 📖 사용 라이브러리
-|라이브러리|모델|기능|설명|
-|:---:|:---:|:---:|:---:|
-|numpy|-|데이터 수치 계산|데이터의 수치적 연산 수행|
-|pandas|-|데이터 조작 및 분석|데이터 읽기, 쓰기, 필터링 등을 지원|
-|matplotlib|-|데이터 시각화|다양한 유형의 그래프 제공|
-|seaborn|-|Matplotlib기반 시각화|통계적 그래프 시각화 지원|
-|sklearn|train_test_split|머신러닝|데이터를 훈련, 테스트 세트로 분류|
-|sklearn|r2_score|머신러닝|결정 계수(R²)를 계산|
-|sklearn|mean_squared_error|머신러닝|평균 제곱 오차(MSE)를 계산|
-|sklearn|StandardScaler|머신러닝|데이터를 표준화|
-|sklearn|LinearRegression|머신러닝|선형 회귀 모델을 구현하|
-|sklearn|RandomForestClassifier|머신러닝|랜덤 포레스트 분류 모델을 구현|
-|sklearn|RandomForestRegressor|머신러닝|랜덤 포레스트 회귀 모델을 구현|
-|xgboost|XGBRegressor|회귀 및 분류|XGBoost를 기반으로 한 회귀 모델|
+|라이브러리|기능|설명|
+|:---:|:---:|:---:|
+|car|회귀 분석 및 일반화 선형 모델|진단 도구와 통계적 테스트를 제공|
+|tidyr|데이터 정리|데이터의 구조를 정리하여 분석하기 쉽게 만듬|
+|dplyr|데이터 조작|데이터 프레임을 필터링, 정렬, 변형하는 작업|
+|psych|통계 분석|기술 통계, 신뢰도 분석, 요인 분석 등을 수행|
+|visreg|회귀 모델의 시각화|회귀선과 예측 구간을 시각적으로 표현|
+|ggplot2|데이터 시각화|다양한 유형의 그래프를 생성|
+|corrplot|상관 행렬을 시각화|상관계수를 시각적으로 표현|
+|ggcorrplot|ggplot2 기반의 상관 행렬 시각화|상관계수를 시각적으로 표현|
+|ResourceSelection|적합성 평가|로지스틱 회귀 모델의 적합성을 평가|
+|PerformanceAnalytics|성과 분석|성과 지표를 계산하고 시각화|
 <br>
 
 [📌 목차로 이동](#-목차)
@@ -83,7 +79,7 @@
 
 ## ⚙️ 프로세스
 - #### 데이터 수집
-  >- 서울열린데이터광장 서울시 공공자전거 이용정보(일별)
+  >- 서울열린데이터광장 서울시 모기지수 정보(일별)
   >- 기상자료 개방포털 서울시 기상관측 데이터(일별)
 - #### 데이터 전처리
   >- 데이터 표준화 및 전처리(결측치, 이상치 처리)
@@ -91,15 +87,13 @@
   >- 상관관계 분석을 통해 독립변수 간의 관계를 확인
   >- 특성 중요도를 통해 중요도가 낮은 독립변수 제거
 - #### 데이터 모델링
-  >- 모델 성능 평가를 위해 MSE, r-squared 등의 지표를 사용
-  >- 모델 비교 및 최적 모델 도출 (XGBoost 채택)
+  >- 모델 성능 평가를 위해 AIC, H-L적합도, 다중공선성 등의 지표를 사용
 - #### 데이터 예측
-  >- 다양한 기상요인에 따른 공공자전거 수요 예측
+  >- 다양한 기상요인에 따른 주변부, 수변부 모기지수 예측
 - #### 결과 시각화 및 분석
-  >- 모델의 정확도 평가를 위해 실제값과 예측값을 비교
-  >- 예측결과에 대한 분석 결과를 산점도로 시각화
-  >- 실제값과 예측값 간의 차이를 바탕으로 잔차 분석 진행
-  >- 기상요인에 따른 공공자전거 수요 예측을 통한 운영 효율성 향상 및 환경적 기여
+  >- 기상요인에 따른 모기지수 증가 예측
+  >- 예측결과에 대한 분석 결과를 그래프로 시각화
+  >- 기상요인에 따른 모기지수 예측을 통한 운영 효율성 향상 및 환경적 기여
 
 <br>
 
@@ -208,8 +202,9 @@
 
 [📌 목차로 이동](#-목차)
 
+## ✏️ 코드 설명
 <details>
-  <summary><b>코드 및 설명</b> (👈 Click)</summary>
+  <summary><b>코드 설명 보기</b> (👈 Click)</summary>
   
 ### 필요한 라이브러리 호출
 ```
@@ -487,4 +482,6 @@ ggplot(data = temp_data, aes(x = month, y = value, color = variable)) +
 ```
 ![geom_line](https://github.com/98jiyong/Data_Compile_Analysis/assets/119985920/1048f664-469d-4235-bf6d-2476e11aec08)<br>
 
-</details>
+</details><br>
+
+[📌 목차로 이동](#-목차)
